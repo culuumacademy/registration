@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Culuum Academy — Registration</title>
+    <meta
+      name="description"
+      content="Register for Culuum Academy's All-in-One English & Skills Program."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">🦜</div>
+          <div class="brand-text">
+            <h1 class="brand-name">Culuum Academy</h1>
+            <p class="brand-tag">English • Digital Skills</p>
+          </div>
+        </div>
+        <div class="contact">
+          <a class="contact-link" href="tel:+252000000000">+252 XX XXX XXXX</a>
+          <span class="divider" aria-hidden="true">•</span>
+          <a class="contact-link" href="mailto:admin@culuum.academy"
+            >admin@culuum.academy</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-inner">
+          <h2 class="hero-title">Your Journey Starts Here</h2>
+          <p class="hero-quote">
+            “Every big change starts with one small step—<strong
+              >today is yours</strong
+            >.”<br />
+            <span class="so"
+              >“Safarkaagu halkan ayuu ka bilaabmaa—<strong
+                >ku bilow maanta</strong
+              >.”</span
+            >
+          </p>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <div class="container">
+          <div class="card">
+            <h3 class="card-title">Student Registration Form</h3>
+            <p class="card-subtitle">
+              Fill the form below to join our program. We’ll contact you on
+              WhatsApp or email.
+            </p>
+
+            <form id="registration-form" novalidate>
+              <div class="grid">
+                <div class="field">
+                  <label for="fullName"
+                    >Full Name
+                    <span aria-hidden="true" class="req">*</span></label
+                  >
+                  <input
+                    id="fullName"
+                    name="fullName"
+                    type="text"
+                    placeholder="e.g., Ahmed Ali"
+                    autocomplete="name"
+                    required
+                  />
+                  <small class="hint so">Magacaaga oo buuxa</small>
+                </div>
+
+                <div class="field">
+                  <label for="level"
+                    >English Level
+                    <span aria-hidden="true" class="req">*</span></label
+                  >
+                  <select id="level" name="level" required>
+                    <option value="" disabled selected>
+                      Select your level
+                    </option>
+                    <option>Beginner</option>
+                    <option>Elementary</option>
+                    <option>Intermediate</option>
+                    <option>Advanced</option>
+                    <option>Not sure</option>
+                  </select>
+                  <small class="hint so">Heerka Ingiriisigaaga</small>
+                </div>
+
+                <div class="field">
+                  <label for="phone"
+                    >Phone / WhatsApp
+                    <span aria-hidden="true" class="req">*</span></label
+                  >
+                  <input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    placeholder="+252 6X XXX XXX"
+                    autocomplete="tel"
+                    required
+                  />
+                  <small class="hint so">Lambarka taleefoonka / WhatsApp</small>
+                </div>
+
+                <div class="field">
+                  <label for="email">Email</label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="you@example.com"
+                    autocomplete="email"
+                  />
+                  <small class="hint so">Boostada elektarooniga</small>
+                </div>
+
+                <div class="field">
+                  <label for="contactPref">Preferred Contact</label>
+                  <select id="contactPref" name="contactPref">
+                    <option>WhatsApp</option>
+                    <option>Phone Call</option>
+                    <option>Email</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="notes">Notes (optional)</label>
+                  <textarea
+                    id="notes"
+                    name="notes"
+                    rows="3"
+                    placeholder="Anything we should know?"
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="actions">
+                <button type="submit" class="btn">Submit Registration</button>
+                <p
+                  id="form-status"
+                  role="status"
+                  aria-live="polite"
+                  class="status"
+                ></p>
+              </div>
+            </form>
+
+            <p class="privacy">
+              By submitting this form you agree to our privacy terms. We’ll only
+              use your data for enrollment and support.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>© <span id="year"></span> Culuum Academy — All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // === CONFIG: your deployed Apps Script Web App URL ===
+      const SCRIPT_URL =
+        "https://script.google.com/macros/s/AKfycbytEMC5DHvwhkFCoUuwm51ddgF1nX4y-uSCxc3fWOnc2TGwhhRlW3-jPSTrcL0cdNJsRA/exec";
+
+      const form = document.getElementById("registration-form");
+      const statusEl = document.getElementById("form-status");
+
+      function setStatus(msg, ok = true) {
+        statusEl.textContent = msg;
+        statusEl.className = "status " + (ok ? "ok" : "err");
+      }
+
+      function validate(inputs) {
+        const errors = [];
+        if (!inputs.fullName || inputs.fullName.trim().length < 3)
+          errors.push("Please enter your full name.");
+        if (!inputs.level) errors.push("Please select your English level.");
+        if (!inputs.phone || inputs.phone.trim().length < 7)
+          errors.push("Please enter a valid phone / WhatsApp.");
+        if (inputs.email && !/^\S+@\S+\.\S+$/.test(inputs.email))
+          errors.push("Please enter a valid email.");
+        return errors;
+      }
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        setStatus("Submitting…");
+
+        const payload = {
+          fullName: document.getElementById("fullName").value.trim(),
+          level: document.getElementById("level").value,
+          phone: document.getElementById("phone").value.trim(),
+          email: document.getElementById("email").value.trim(),
+          contactPref: document.getElementById("contactPref").value,
+          notes: document.getElementById("notes").value.trim(),
+          source: "culuum-website",
+        };
+
+        const errs = validate(payload);
+        if (errs.length) {
+          setStatus(errs.join(" "), false);
+          return;
+        }
+
+        try {
+          const resp = await fetch(SCRIPT_URL, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" }, // avoids preflight
+            body: JSON.stringify(payload),
+          });
+
+          let ok = false;
+          try {
+            const data = await resp.json();
+            ok = !!data.ok;
+          } catch (_) {
+            // In no-cors or if response isn’t JSON, ignore and assume success
+            ok = true;
+          }
+
+          if (ok) {
+            setStatus("✅ Registered successfully! We’ll contact you soon.");
+            form.reset();
+          } else {
+            setStatus("Something went wrong. Please try again.", false);
+          }
+        } catch (err) {
+          setStatus(
+            "Network error. Please check your connection and try again.",
+            false
+          );
+        }
+      });
+    </script>
+  </body>
+</html>
